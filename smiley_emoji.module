@@ -36,7 +36,7 @@ function smiley_emoji_smiley_replacements() {
   if ($library['installed']) {
     // Find the smileys.
     $image_path = DRUPAL_ROOT . '/' . $library['library path'] . '/images/emoji';
-    $contents = array_diff(scandir($image_path), array('..', '.'));
+    $contents = array_diff(scandir($image_path), array('..', '.', 'unicode'));
 
     // Loop through smileys and add them to the smiley array.
     foreach ($contents as $filename) {
