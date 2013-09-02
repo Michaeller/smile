@@ -1,1 +1,7 @@
 name = Smiley Emoji
+description = A plugin to the Smiley module which adds the Emoji from Github.
+core = 7.x
+package = Content authoring
+
+dependencies[] = libraries
+dependencies[] = smiley (>=7.x-2.x)

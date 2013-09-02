@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * A plugin to the Smiley module which adds the Emoji from Github.
+ */
+
+/* Hooks. */
+
+/**
+ * Implements hook_libraries_info().
+ */
+function smiley_emoji_libraries_info() {
+  $libraries = array();
+
+  $libraries['gemoji'] = array(
+    'name' => 'gemoji',
+    'vendor url' => 'https://github.com/github/gemoji',
+    'download url' => 'https://github.com/github/gemoji/releases',
+    'version arguments' => array(
+      'file' => 'gemoji.gemspec',
+      'pattern' => '@s\.version[\s]+=[\s]+"([0-9a-zA-Z\.-]+)"@',
+    ),
+  );
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_smiley_replacements().
+ */
+function smiley_emoji_smiley_replacements() {
+  $smileys = array();
+
+  // Try to load the library and check if that worked.
+  $library = libraries_detect('gemoji');
+  if ($library['installed']) {
+    // Find the smileys.
+    $image_path = DRUPAL_ROOT . '/' . $library['library path'] . '/images/emoji';
+    $contents = array_diff(scandir($image_path), array('..', '.'));
+
+    // Loop through smileys and add them to the smiley array.
+    foreach ($contents as $filename) {
+      $key = ':' . preg_filter('@\.[\w]+$@', '', $filename) . ':';
+      $smileys[$key] = base_path() . $library['library path'] . '/images/emoji/' . $filename;
+    }
+  }
+
+  return $smileys;
+}

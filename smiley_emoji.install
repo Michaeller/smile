@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ * Install the Smiley: Emoji module.
+ */
+
+/* Hooks. */
+
+/**
+ * Implements hook_enable().
+ */
+function smiley_emoji_enable() {
+  $library = libraries_detect('gemoji');
+  if ($library['installed']) {
+    drupal_set_message(t('!library library detected. The Smiley: Emoji module is ready to use.', array(
+      '!library' => l(t('Gemoji'), 'https://github.com/github/gemoji/releases', array(
+        'attributes' => array('target' => '_blank'),
+      )),
+    )), 'status');
+  }
+  else {
+    drupal_set_message(t('!library library error! The Smiley: Emoji module will not function until you have downloaded it, extracted the files and placed them in !folder! Check the !status_report for more information.', array(
+      '!library' => l(t('Gemoji'), 'https://github.com/github/gemoji/releases', array(
+        'attributes' => array('target' => '_blank'),
+      )),
+      '!folder' => '<code>sites/all/libraries/gemoji</code>',
+      '!status_report' => l(t('Status report'), 'admin/reports/status'),
+    )), 'error');
+  }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function smiley_emoji_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if ($phase === 'runtime') {
+    $requirements['smiley_emoji'] = array('title' => $t('Gemoji library'));
+
+    $library = libraries_detect('gemoji');
+    if ($library['installed']) {
+      $requirements['smiley_emoji']['severity'] = REQUIREMENT_OK;
+      $requirements['smiley_emoji']['value'] = $library['version'];
+    }
+    else {
+      $requirements['smiley_emoji']['severity'] = REQUIREMENT_ERROR;
+      $requirements['smiley_emoji']['value'] = $library['error'];
+      $requirements['smiley_emoji']['description'] = $library['error message'];
+    }
+  }
+
+  return $requirements;
+}
