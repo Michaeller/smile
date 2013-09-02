@@ -36,7 +36,7 @@ REQUIREMENTS
 KNOWN PROBLEMS
 --------------
 
-We don't know of any problems at this time, so if you find one, please let us
+I don't know of any problems at this time, so if you find one, please let me
 know by adding an issue!
 
 VERSION HISTORY
