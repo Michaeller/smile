@@ -58,7 +58,7 @@ INSTALLATION
 
 2. Download and install the smiley_emoji project.
 
-   Install as usual, see http://drupal.org/node/70151 for further information.
+   Install as usual, see https://drupal.org/node/895232 for further information.
 
 3. Ensure that Drupal recognizes the gemoji module.
 
